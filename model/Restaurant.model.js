@@ -1,44 +1,49 @@
-const mongoose=require("mongoose");
-require("dotenv").config()
+// Importing External Packages
 
-const addrSchema=new mongoose.Schema({
-    street: String,
-    city: String,
-    state: String,
-    country: String,
-    zip: String
-})
+const mongoose = require("mongoose")
 
-  
+// ..................................................................
 
-const schema=new mongoose.Schema({
-   name:{
-    type:String,
-    required:true
-   },
-   address:addrSchema,
-   menu:[
-    {
-        name:{
-            type:String,
-            required:true
-        },
-        description:{
-            type:String,
-            required:true
-        },
-        price:{
-            type:Number,
-            required:true,
-        },
-        image:String
+const menuSchema = mongoose.Schema({
+    name: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    price: {
+        type: Number
+    },
+    image: {
+        type: String
     }
-   ]
 })
 
+const ResSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    address: {
+        street: {
+            type: String
+        },
+        city: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        country: {
+            type: String
+        },
+        zip: {
+            type: String
+        }
+    },
+    menu: [menuSchema]
+});
 
-const Restuarnt=mongoose.model("resturant",schema);
+const Res = mongoose.model('Res', ResSchema);
 
-
-
-module.exports={Restuarnt}
+module.exports = { Res };

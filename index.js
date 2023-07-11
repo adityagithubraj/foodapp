@@ -3,6 +3,8 @@
 const express =require("express");
 const connection = require("./config/db")
 const {userRouter}=require("./routes/User.route")
+const {ResRouter}=require("./routes/restaurant.route")
+const {OrderRoute}=require("./routes/Order.route")
 const app = express();
 
 require("dotenv").config()
@@ -20,6 +22,12 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/user",userRouter)
+app.use("/api/restaurants",ResRouter)
+app.use("/api/orders",OrderRoute)
+
+
+
+
 
 //........... server is listen her ..............
 app.listen(port,()=>{

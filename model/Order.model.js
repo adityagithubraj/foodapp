@@ -1,57 +1,42 @@
+// Importing External Packages
 
-const mongoose=require("mongoose");
-require("dotenv").config()
+const mongoose = require("mongoose")
 
-  
-const addressSchema=new mongoose.Schema({
-      street: String,
-      city: String,
-      state: String,
-      country: String,
-      zip: String
+// ..................................................................
+
+const itemSchema=mongoose.Schema({
+    name:String,
+    price:Number,
+    quantity:Number
 })
 
-const schema=new mongoose.Schema({
+const OrderSchema=mongoose.Schema({
     user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        type:mongoose.Types.ObjectId,
+        ref:"User"
     },
     restaurant:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"user"
+        type:mongoose.Types.ObjectId,
+        ref:"Res"
     },
-    items:[
-        {
-            name:{
-                type:String,
-                required:true
-            },
-            price:{
-                type:Number,
-                required:true
-            },
-            quantity:{
-                type:Number,
-                required:true
-            }
-        }
-    ],
-    totalprice:{
-        type:Number,
-        required:true
-    },
-    deliveryAddress:addressSchema,
-    
-     status:{
+    items:[itemSchema],
+    totalPrice: Number,
+    deliveryAddress: {
+        street: String,
+        city: String,
+        state: String,
+        country: String,
+        zip: String
+      },
+      status:{
         type:String,
-        enum:["placed", "preparing", "on the way", "delivered"],
-     }
+        enum:["placed", "preparing", "on the way", "delivered"]
+      }
 
 })
 
+const Order=mongoose.model("Order",OrderSchema)
 
-const Order=mongoose.model("order",schema);
-
-
-
-module.exports={Order}
+module.exports={
+    Order
+}
